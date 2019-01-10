@@ -8,15 +8,14 @@
 
 import UIKit
 
-fileprivate let bundle = Bundle(for: Toast.self)
 
-enum ToastAlignment {
+public enum ToastAlignment {
     case top
     case center
     case bottom
 }
 
-enum ToastStyle {
+public enum ToastStyle {
     case activity
     case loading
     case success
@@ -40,8 +39,13 @@ enum ToastStyle {
             return nil
         }
     }
+    
+    var bundle: Bundle {
+        return Bundle(path: Bundle(for: Toast.self).resourcePath! + "/toast.bundle")!
+    }
+    
 }
-
+//let bundle = Bundle(path: Bundle(for: Toast.self).resourcePath! + "/Resources")
 
 fileprivate let kScreenWidth = UIScreen.main.bounds.width
 fileprivate let kScreenHeight = UIScreen.main.bounds.height
@@ -65,7 +69,7 @@ class Toast: UIView, KTimer {
     }()
     
     var imageView: UIImageView = {
-       return UIImageView()
+        return UIImageView()
     }()
     
     var style: ToastStyle!
@@ -167,7 +171,7 @@ extension UIView {
         }
     }
     
-    func makeToast(_ style: ToastStyle = .activity, message: String? = nil, image: UIImage? = nil, duration: Double? = nil, alignment: ToastAlignment = .center) {
+    public func makeToast(_ style: ToastStyle = .activity, message: String? = nil, image: UIImage? = nil, duration: Double? = nil, alignment: ToastAlignment = .center) {
         
         hideToast()
         
@@ -207,7 +211,7 @@ extension UIView {
         }
     }
     
-    fileprivate func hideToast() {
+    public func hideToast() {
         if let toast = toast {
             toast.cancelTask()
             toast.stopAnimation()

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol KTimer {
+public protocol KTimer {
     
     var timerName: String? {get set}
     func execTask(start: TimeInterval, interval: DispatchTimeInterval, repeats: Bool, async:Bool, task:(()->())?)-> String?
@@ -17,7 +17,7 @@ protocol KTimer {
 }
 
 
-extension KTimer {
+public extension KTimer {
     
     func execTask(start: TimeInterval, interval: DispatchTimeInterval, repeats: Bool, async: Bool, task:(()->())?)-> String? {
         return KKTimer.execTask(start: start, interval: interval, repeats: repeats, async: async, task: task)
