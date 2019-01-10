@@ -23,7 +23,6 @@
 		4B6D3EF121E5EB9F006B044B /* toast_activity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B6D3EE821E5EB9F006B044B /* toast_activity@2x.png */; };
 		4B6D3EF221E5EB9F006B044B /* toast_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B6D3EE921E5EB9F006B044B /* toast_error@2x.png */; };
 		4B6D3EF421E5ECD6006B044B /* KKTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6D3EF321E5ECD6006B044B /* KKTimer.swift */; };
-		4B6D3EF921E71E7E006B044B /* toast.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 4B6D3EF821E71E7E006B044B /* toast.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +44,6 @@
 		4B6D3EE821E5EB9F006B044B /* toast_activity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toast_activity@2x.png"; sourceTree = "<group>"; };
 		4B6D3EE921E5EB9F006B044B /* toast_error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toast_error@2x.png"; sourceTree = "<group>"; };
 		4B6D3EF321E5ECD6006B044B /* KKTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KKTimer.swift; sourceTree = "<group>"; };
-		4B6D3EF821E71E7E006B044B /* toast.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = toast.podspec; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +76,6 @@
 		4B6D3ECC21E5E997006B044B /* toast */ = {
 			isa = PBXGroup;
 			children = (
-				4B6D3EF821E71E7E006B044B /* toast.podspec */,
 				4B6D3EF621E6F543006B044B /* toast */,
 				4B6D3ECD21E5E997006B044B /* AppDelegate.swift */,
 				4B6D3ECF21E5E997006B044B /* ViewController.swift */,
@@ -174,7 +171,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B6D3EF921E71E7E006B044B /* toast.podspec in Resources */,
 				4B6D3ED821E5E99A006B044B /* LaunchScreen.storyboard in Resources */,
 				4B6D3EEE21E5EB9F006B044B /* toast_warn@3x.png in Resources */,
 				4B6D3EED21E5EB9F006B044B /* toast_success@3x.png in Resources */,
@@ -349,6 +345,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HA5G797698;
 				INFOPLIST_FILE = "$(SRCROOT)/toast/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -367,6 +364,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HA5G797698;
 				INFOPLIST_FILE = "$(SRCROOT)/toast/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

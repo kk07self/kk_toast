@@ -10,9 +10,9 @@ It is a component for ios toast, written by Swift.
 DESC
 s.license      = 'MIT'
 s.authors      = {'Kirk' => 'kk.07.self@gmail.com'}
-s.platform     = :ios, '8.0'
-s.source       = {:git => 'https://github.com/kk07self/kk_refresh.git', :tag => s.version}
-s.source_files = 'toast/toast/*.swift'
+s.platform     = :ios, '9.0'
+s.source       = {:git => 'https://github.com/kk07self/toast.git', :tag => s.version}
+s.source_files = 'toast/toast/*'
 s.resource_bundle = {
     'toast' => ['toast/toast/resource/*.png']
 }
