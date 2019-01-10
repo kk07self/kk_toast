@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
 
-s.name         = 'toast'
+s.name         = 'kk_toast'
 s.version      = '1.0.0'
 s.summary      = 'a component of toast on iOS'
 s.homepage     = 'https://github.com/kk07self/kk_toast'
