@@ -1,6 +1,6 @@
 //
 //  Timer.swift
-//  MeeYi
+//  toast
 //
 //  Created by K K on 2018/11/26.
 //  Copyright © 2018 陈康. All rights reserved.

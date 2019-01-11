@@ -1,25 +1,17 @@
-###Feature
-
----
+#Feature
 
 - 持续悬停加载，支持上中下位置
 - 短时间状态弹框，支持上中下位置，支持自定义时长，支持自定义图标
 - 携带了定时器功能，线程安全，无死循环
 
-
-
-### Requirements
-
-----
+#Requirements
 
 - iOS 9.0+
 - Swift4.2+
 
 
 
-### Using
-
-----
+# Using
 
 - 集成
 
@@ -50,7 +42,7 @@ public func makeToast(_ style: ToastStyle = .activity, message: String? = nil, i
 
 // message: 弹框的文本信息
 
-// image: 短时间悬停时可配置的图标，如果为nil使用默认的，style为.loading和.activity时无效
+// image: 短时间悬停时可配置的图标，如果为nil使用默认的
 
 // duration: 短时间悬停时配置的时长，style为.loading和.activity时无效
 

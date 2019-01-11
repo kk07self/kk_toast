@@ -1,6 +1,6 @@
 //
 //  UIView+Toast.swift
-//  MiYi
+//  toast
 //
 //  Created by 陈康 on 2018/5/3.
 //  Copyright © 2018 陈康. All rights reserved.
@@ -45,7 +45,6 @@ public enum ToastStyle {
     }
     
 }
-//let bundle = Bundle(path: Bundle(for: Toast.self).resourcePath! + "/Resources")
 
 fileprivate let kScreenWidth = UIScreen.main.bounds.width
 fileprivate let kScreenHeight = UIScreen.main.bounds.height
@@ -171,6 +170,15 @@ extension UIView {
         }
     }
     
+    
+    /// 弹框统一api
+    ///
+    /// - Parameters:
+    ///   - style: 需要弹框的样式，loading和activity是长时间悬浮，其他是短时间弹框需要设置时长
+    ///   - message: 弹框的文本信息
+    ///   - image: 自定义图标
+    ///   - duration: 时长，loading和activity无效
+    ///   - alignment: 弹框的位置
     public func makeToast(_ style: ToastStyle = .activity, message: String? = nil, image: UIImage? = nil, duration: Double? = nil, alignment: ToastAlignment = .center) {
         
         hideToast()
@@ -211,6 +219,8 @@ extension UIView {
         }
     }
     
+    
+    /// 隐藏弹框
     public func hideToast() {
         if let toast = toast {
             toast.cancelTask()
