@@ -8,13 +8,61 @@
 
 import UIKit
 
+fileprivate let kScreenWidth = UIScreen.main.bounds.width
+fileprivate let kScreenHeight = UIScreen.main.bounds.height
 
+
+class ToastConfig {
+    static let shared = ToastConfig()
+    
+    // 各种样式的图标配置
+    var activityImage: UIImage? = ToastStyle.activity.image
+    var loadingImage: UIImage? = ToastStyle.loading.image
+    var successImage: UIImage? = ToastStyle.success.image
+    var errorImage: UIImage? = ToastStyle.error.image
+    var waringImage: UIImage? = ToastStyle.warning.image
+    
+    
+    // 尺寸配置
+    var verticalMargin: CGFloat = 16.0
+    var horizontalMargin: CGFloat = 16.0
+    
+    var marginOnActivity: CGFloat = 15.0
+    var marginOnLoading: CGFloat = 15.0
+    
+    var marginOnMessageAndImage: CGFloat = 15.0
+    
+    // 有文字情况下图片宽度
+    var imageWidthOnMessage: CGFloat = 32.0
+    
+    // 只有loading情况下图片宽度
+    var imageWidthOnLoading: CGFloat = 80.0
+    
+    // 只有activity情况下图片宽度
+    var imageWidthOnActivity: CGFloat = 80.0
+    
+    // toast的最大宽度，超过换行
+    var maxWidth: CGFloat = kScreenWidth - 50.0*2
+    
+    // 只有一行时最小高度
+    var minHeight: CGFloat = 48.0
+    
+    // message 信息
+    var textColor: UIColor = UIColor.white
+    var textFont: UIFont = UIFont.systemFont(ofSize: 14.0)
+    
+}
+
+
+// MARK: Toast 位置样式
 public enum ToastAlignment {
     case top
     case center
     case bottom
 }
 
+
+// MARK: Toast 样式
 public enum ToastStyle {
     case activity
     case loading
@@ -41,39 +89,36 @@ public enum ToastStyle {
     }
     
     var bundle: Bundle {
+        if Bundle(for: Toast.self) == Bundle.main {
+            return Bundle.main
+        }
         return Bundle(path: Bundle(for: Toast.self).resourcePath! + "/toast.bundle")!
     }
     
 }
 
-fileprivate let kScreenWidth = UIScreen.main.bounds.width
-fileprivate let kScreenHeight = UIScreen.main.bounds.height
-fileprivate let margin: CGFloat = 15.0
-fileprivate let maxWidth: CGFloat = (kScreenWidth - 30*2)
-fileprivate let minHeight: CGFloat = 50
-fileprivate let loadingWidth: CGFloat = 30
-fileprivate let activityWidth: CGFloat = 60
-fileprivate let activityMargin: CGFloat = 10
 
-class Toast: UIView, KTimer {
-    var timerName: String?
+// MARK: Toast Class
+class Toast: UIView {
     
     fileprivate var message: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.textColor = UIColor.white
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.textColor = ToastConfig.shared.textColor
+        label.font = ToastConfig.shared.textFont
         label.numberOfLines = 0
         return label
     }()
     
-    var imageView: UIImageView = {
-        return UIImageView()
+    fileprivate var imageView: UIImageView = {
+        let imageV = UIImageView()
+        imageV.contentMode = .scaleAspectFit
+        return imageV
     }()
     
-    var style: ToastStyle!
+    fileprivate var style: ToastStyle!
     
-    @objc func becomActivity() {
+    @objc fileprivate func becomActivity() {
         if style == .activity || style == .loading {
             // 开启动画
             self.stopAnimation()
@@ -94,42 +139,56 @@ class Toast: UIView, KTimer {
             toast.imageView.image = image ?? style.image
         }
         
-        var width = activityWidth
-        var height = minHeight
-        let imageWidth = style != .message ? loadingWidth : 0
+        var width: CGFloat = 0.0
+        var height: CGFloat = ToastConfig.shared.minHeight
+        
         if let message = message {
             toast.message.text = message
             toast.addSubview(toast.message)
-            let textHeight = message.Toast_heightWithFont(font: toast.message.font, fixedWidth: maxWidth - margin * 3 - imageWidth)
-            height = textHeight > height - activityMargin * 2 ? textHeight + activityMargin * 2 : height
+            
+            var fixedWidth: CGFloat = 0.0
+            // 纯文字
+            if style == .message {
+                fixedWidth = ToastConfig.shared.maxWidth - ToastConfig.shared.verticalMargin * 2
+            } else {
+                // 有图片
+                fixedWidth = ToastConfig.shared.maxWidth - ToastConfig.shared.verticalMargin * 2 - ToastConfig.shared.marginOnMessageAndImage - ToastConfig.shared.imageWidthOnMessage
+            }
+            
+            let textHeight = message.Toast_heightWithFont(font: toast.message.font, fixedWidth: fixedWidth)
+            height = textHeight > height - ToastConfig.shared.horizontalMargin * 2 ? textHeight + ToastConfig.shared.horizontalMargin * 2 : height
             
             // 单行
-            if height == minHeight {
+            if height == ToastConfig.shared.minHeight {
+                toast.message.text = message
                 toast.message.sizeToFit()
-                width = margin*2 + activityMargin + loadingWidth + toast.message.frame.size.width
+                width = ToastConfig.shared.verticalMargin*2 + toast.message.frame.size.width + 5
             } else {
                 // 多行
-                width = maxWidth
+                width = ToastConfig.shared.maxWidth
             }
             
             if style == .message {
                 // 纯文字
-                toast.message.frame = CGRect(x: margin, y: activityMargin, width: width - margin*2 - imageWidth, height: height - activityMargin * 2)
+                toast.message.frame = CGRect(x: ToastConfig.shared.verticalMargin, y: ToastConfig.shared.horizontalMargin, width: width - ToastConfig.shared.verticalMargin*2, height: height - ToastConfig.shared.horizontalMargin * 2)
                 toast.message.textAlignment = .center
             } else {
                 // 文字加图片
-                toast.imageView.frame.size = CGSize(width: loadingWidth, height: loadingWidth)
-                toast.imageView.frame.origin = CGPoint(x: margin, y: (height - loadingWidth)*0.5)
-                toast.message.frame = CGRect(x: loadingWidth + margin + activityMargin, y: activityMargin, width: width - margin*2 - activityMargin - loadingWidth, height: height - activityMargin * 2)
+                width += ToastConfig.shared.imageWidthOnMessage + ToastConfig.shared.marginOnMessageAndImage
+                toast.imageView.frame.size = CGSize(width: ToastConfig.shared.imageWidthOnMessage, height: ToastConfig.shared.imageWidthOnMessage)
+                toast.imageView.frame.origin = CGPoint(x: ToastConfig.shared.marginOnMessageAndImage, y: (height - ToastConfig.shared.imageWidthOnMessage)*0.5)
+                toast.message.frame = CGRect(x: ToastConfig.shared.marginOnMessageAndImage + ToastConfig.shared.verticalMargin + ToastConfig.shared.imageWidthOnMessage, y: ToastConfig.shared.horizontalMargin, width: width - ToastConfig.shared.verticalMargin*2 - ToastConfig.shared.imageWidthOnMessage - ToastConfig.shared.marginOnMessageAndImage, height: height - ToastConfig.shared.horizontalMargin * 2)
             }
             
         } else {
-            let imageW = width - activityMargin*2
-            height = activityWidth
-            toast.imageView.frame = CGRect(x: activityMargin, y: activityMargin, width: imageW, height: imageW)
+            width = toast.style == .loading ? ToastConfig.shared.imageWidthOnLoading : ToastConfig.shared.imageWidthOnActivity
+            let margin = toast.style == .loading ? ToastConfig.shared.marginOnLoading : ToastConfig.shared.marginOnActivity
+            let imageW = width - margin*2
+            height = toast.style == .loading ? ToastConfig.shared.imageWidthOnLoading : ToastConfig.shared.imageWidthOnActivity
+            toast.imageView.frame = CGRect(x: margin, y: margin, width: imageW, height: imageW)
         }
         toast.frame = CGRect(x: 0, y: 0, width: width, height: height)
-        toast.backgroundColor = UIColor.black
+        toast.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         toast.layer.cornerRadius = 5
         toast.layer.shadowOffset = CGSize(width: 0, height: 3)
         toast.layer.shadowOpacity = 0.8
@@ -153,23 +212,55 @@ class Toast: UIView, KTimer {
 }
 
 
-
+// MARK: api 聚集
 extension UIView {
     
-    private struct AssociateKeys {
-        static var toastKey = "toastKey"
+    /// message toast
+    public func makeMessageToast(_ message: String?, duration: Double? = 2.0, alignment: ToastAlignment = .center) {
+        guard let message = message else { return }
+        makeToast(.message, message: message, duration: duration, alignment: alignment)
     }
     
-    fileprivate var toast: Toast? {
-        set(value) {
-            objc_setAssociatedObject(self, &AssociateKeys.toastKey, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        }
-        
-        get {
-            return objc_getAssociatedObject(self, &AssociateKeys.toastKey) as? Toast
-        }
+    /// message and icon toast
+    public func makeImageAndMessageToast(_ message: String?, image: UIImage?, duration: Double? = 2.0, alignment: ToastAlignment = .center) {
+        guard let message = message else { return }
+        makeToast(.message, message: message, image: image, duration: duration, alignment: alignment)
     }
     
+    /// success and message
+    public func makeSuccessToast(_ message: String?, duration: Double? = 2.0, alignment: ToastAlignment = .center) {
+        makeToast(.success, message: message, duration: duration, alignment: alignment)
+    }
+    
+    /// warning and message
+    public func makeWarningToast(_ message: String?, duration: Double? = 2.0, alignment: ToastAlignment = .center) {
+        makeToast(.warning, message: message, duration: duration, alignment: alignment)
+    }
+    
+    /// error and message
+    public func makeErrorToast(_ message: String?, duration: Double? = 2.0, alignment: ToastAlignment = .center) {
+        makeToast(.error, message: message, duration: duration, alignment: alignment)
+    }
+    
+    /// loading toast
+    public func makeLoadingToast(_ alignment: ToastAlignment = .center) {
+        makeToast(.loading, alignment: alignment)
+    }
+    
+    /// loading and message toast
+    public func makeLoadingAndMessageToast(_ message: String?, alignment: ToastAlignment = .center) {
+        makeToast(.loading, message: message, alignment: alignment)
+    }
+    
+    /// activity toast
+    public func makeActivityToast(_ alignment: ToastAlignment = .center) {
+        makeToast(.activity, alignment: alignment)
+    }
+    
+    /// activity and message toast
+    public func makeActivityAndMessageToast(_ message: String?, alignment: ToastAlignment = .center) {
+        makeToast(.activity, message: message, alignment: alignment)
+    }
     
     /// 弹框统一api
     ///
@@ -209,7 +300,7 @@ extension UIView {
         }
         
         if let duration = duration {
-            toast.timerName = toast.execTask(start: duration, interval: DispatchTimeInterval.seconds(Int(duration)), repeats: false, async: false) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
                 if let toast = self.toast {
                     toast.stopAnimation()
                     toast.removeFromSuperview()
@@ -223,10 +314,27 @@ extension UIView {
     /// 隐藏弹框
     public func hideToast() {
         if let toast = toast {
-            toast.cancelTask()
             toast.stopAnimation()
             toast.removeFromSuperview()
             self.toast = nil
+        }
+    }
+}
+
+
+extension UIView {
+    
+    private struct AssociateKeys {
+        static var toastKey = "com.toast.key"
+    }
+    
+    fileprivate var toast: Toast? {
+        set(value) {
+            objc_setAssociatedObject(self, &AssociateKeys.toastKey, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+        
+        get {
+            return objc_getAssociatedObject(self, &AssociateKeys.toastKey) as? Toast
         }
     }
 }

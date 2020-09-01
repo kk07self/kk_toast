@@ -22,7 +22,6 @@
 		4B6D3EF021E5EB9F006B044B /* toast_loading@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B6D3EE721E5EB9F006B044B /* toast_loading@3x.png */; };
 		4B6D3EF121E5EB9F006B044B /* toast_activity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B6D3EE821E5EB9F006B044B /* toast_activity@2x.png */; };
 		4B6D3EF221E5EB9F006B044B /* toast_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B6D3EE921E5EB9F006B044B /* toast_error@2x.png */; };
-		4B6D3EF421E5ECD6006B044B /* KKTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6D3EF321E5ECD6006B044B /* KKTimer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,7 +42,6 @@
 		4B6D3EE721E5EB9F006B044B /* toast_loading@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toast_loading@3x.png"; sourceTree = "<group>"; };
 		4B6D3EE821E5EB9F006B044B /* toast_activity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toast_activity@2x.png"; sourceTree = "<group>"; };
 		4B6D3EE921E5EB9F006B044B /* toast_error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toast_error@2x.png"; sourceTree = "<group>"; };
-		4B6D3EF321E5ECD6006B044B /* KKTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KKTimer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				4B6D3EF721E6F565006B044B /* resource */,
-				4B6D3EF321E5ECD6006B044B /* KKTimer.swift */,
 				4B6D3EDF21E5E9D9006B044B /* UIView+Toast.swift */,
 			);
 			path = toast;
@@ -196,7 +193,6 @@
 				4B6D3EE021E5E9D9006B044B /* UIView+Toast.swift in Sources */,
 				4B6D3ED021E5E997006B044B /* ViewController.swift in Sources */,
 				4B6D3ECE21E5E997006B044B /* AppDelegate.swift in Sources */,
-				4B6D3EF421E5ECD6006B044B /* KKTimer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,14 +339,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HA5G797698;
+				DEVELOPMENT_TEAM = 5ZPQVN5FJW;
 				INFOPLIST_FILE = "$(SRCROOT)/toast/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = yikelian.toastDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kirk.toast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -362,14 +358,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HA5G797698;
+				DEVELOPMENT_TEAM = 5ZPQVN5FJW;
 				INFOPLIST_FILE = "$(SRCROOT)/toast/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = yikelian.toastDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kirk.toast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
