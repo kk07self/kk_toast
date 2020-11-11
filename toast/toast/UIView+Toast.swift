@@ -188,11 +188,11 @@ class Toast: UIView {
             toast.imageView.frame = CGRect(x: margin, y: margin, width: imageW, height: imageW)
         }
         toast.frame = CGRect(x: 0, y: 0, width: width, height: height)
-        toast.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        toast.backgroundColor = UIColor.black.withAlphaComponent(0.85)
         toast.layer.cornerRadius = 5
         toast.layer.shadowOffset = CGSize(width: 0, height: 3)
         toast.layer.shadowOpacity = 0.8
-        toast.layer.shadowColor = UIColor.black.cgColor
+        toast.layer.shadowColor = UIColor.black.withAlphaComponent(0.25).cgColor
         return toast
     }
     
