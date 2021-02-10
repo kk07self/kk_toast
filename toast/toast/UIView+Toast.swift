@@ -292,6 +292,7 @@ extension UIView {
         }
         toast.frame = CGRect(x: x, y: y, width: width, height: height)
         
+        isUserInteractionEnabled = false
         addSubview(toast)
         
         if style == .activity || style == .loading {
@@ -306,6 +307,7 @@ extension UIView {
                     toast.removeFromSuperview()
                     self.toast = nil
                 }
+                self.isUserInteractionEnabled = true
             }
         }
     }
@@ -318,6 +320,7 @@ extension UIView {
             toast.removeFromSuperview()
             self.toast = nil
         }
+        isUserInteractionEnabled = true
     }
 }
 
