@@ -42,7 +42,7 @@ class ToastConfig {
     var imageWidthOnActivity: CGFloat = 80.0
     
     // toast的最大宽度，超过换行
-    var maxWidth: CGFloat = kScreenWidth - 50.0*2
+    var maxWidth: CGFloat = kScreenWidth - 32.0*2
     
     // 只有一行时最小高度
     var minHeight: CGFloat = 48.0
