@@ -292,10 +292,11 @@ extension UIView {
         }
         toast.frame = CGRect(x: x, y: y, width: width, height: height)
         
-        isUserInteractionEnabled = false
         addSubview(toast)
         
         if style == .activity || style == .loading {
+            // loading的时候再block
+            isUserInteractionEnabled = false
             // 开启动画
             toast.startAnimation()
         }
